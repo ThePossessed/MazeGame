@@ -26,16 +26,16 @@ public:
 private:
 	const int32 MAZE_SIZE = 21;
 
-	TArray<TArray<TArray<bool>>> passages;
-	TArray<TArray<int32>> done;
-	TArray<TArray<int32>> frontier;
-	TArray<TArray<int32>> unexplored;
-	TArray<int32> lastExploredLocation;
+	TArray<TArray<TArray<bool>>> Passages;
+	TArray<TArray<int32>> Done;
+	TArray<TArray<int32>> Frontier;
+	TArray<TArray<int32>> Unexplored;
+	TArray<int32> LastExploredLocation;
 
-	const int32 wallWidth = 100;
-	const int32 passageWidthToWallWidthRatio = 2;
-	const int32 mapLength = wallWidth * (MAZE_SIZE * passageWidthToWallWidthRatio + MAZE_SIZE + 1);
-	const int32 height = 400;
+	const int32 WallWidth = 100;
+	const int32 PassageWidthToWallWidthRatio = 2;
+	const int32 MapLength = WallWidth * (MAZE_SIZE * PassageWidthToWallWidthRatio + MAZE_SIZE + 1);
+	const int32 Height = 400;
 
 	const int32 EAST = 1;
 	const int32 NORTH = 0;
@@ -47,12 +47,12 @@ private:
 
 	const int32 OFFSETS[4][2] = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
 
-	void AddPassage(TArray<int32> a, TArray<int32> b);
-	TArray<int32> ChooseRandomlyFrom(TArray<TArray<int32>> list);
-	TArray<int32> ExpandLocation(TArray<int32> here, int32 direction);
+	void AddPassage(TArray<int32> A, TArray<int32> B);
+	TArray<int32> ChooseRandomlyFrom(TArray<TArray<int32>> List);
+	TArray<int32> ExpandLocation(TArray<int32> Here, int32 Direction);
 	TArray<int32> ExpandMaze();
 	void GenerateMaze();
-	void SpawnCorner();
+	void SpawnCorners();
 	void SpawnWalls();
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
