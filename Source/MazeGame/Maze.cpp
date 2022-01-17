@@ -110,7 +110,7 @@ void AMaze::SpawnCorner()
 	FVector SpawnLocation;
 	SpawnLocation.X = 0.0;
 	SpawnLocation.Y = 0.0;
-	SpawnLocation.Z = 200;
+	SpawnLocation.Z = height / 2;
 
 	FRotator SpawnRotation;
 	SpawnRotation.Roll = 0.0;
@@ -121,8 +121,8 @@ void AMaze::SpawnCorner()
 	{
 		for (int j = 0; j < MAZE_SIZE + 1; j++)
 		{
-			SpawnLocation.X = i * 300 + 50;
-			SpawnLocation.Y = j * 300 + 50;
+			SpawnLocation.X = i * wallWidth * (1 + passageWidthToWallWidthRatio) + wallWidth / 2;
+			SpawnLocation.Y = j * wallWidth * (1 + passageWidthToWallWidthRatio) + wallWidth / 2;
 			GetWorld()->SpawnActor<AActor>(CornerClass, SpawnLocation, SpawnRotation);
 		}
 	}
@@ -133,7 +133,7 @@ void AMaze::SpawnWalls()
 	FVector SpawnLocation;
 	SpawnLocation.X = 0.0;
 	SpawnLocation.Y = 0.0;
-	SpawnLocation.Z = 200;
+	SpawnLocation.Z = height / 2;
 
 	FRotator SpawnRotation;
 	SpawnRotation.Roll = 0.0;
@@ -144,24 +144,24 @@ void AMaze::SpawnWalls()
 		SpawnRotation.Yaw = 90.0;
 		if (i != 0)
 		{
-			SpawnLocation.X = i * 300 + 200;
-			SpawnLocation.Y = 50;
+			SpawnLocation.X = wallWidth * (i * (1 + passageWidthToWallWidthRatio) + passageWidthToWallWidthRatio / 2 + 1);
+			SpawnLocation.Y = wallWidth / 2;
 			GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation);
 		}
 
-		SpawnLocation.X = i * 300 + 200;
-		SpawnLocation.Y = 6350;
+		SpawnLocation.X = wallWidth * (i * (1 + passageWidthToWallWidthRatio) + passageWidthToWallWidthRatio / 2 + 1);
+		SpawnLocation.Y = mapLength - wallWidth / 2;
 		GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation);
 
 		SpawnRotation.Yaw = 0.0;
-		SpawnLocation.X = 50;
-		SpawnLocation.Y = i * 300 + 200;
+		SpawnLocation.X = wallWidth / 2;
+		SpawnLocation.Y = wallWidth * (i * (1 + passageWidthToWallWidthRatio) + passageWidthToWallWidthRatio / 2 + 1);
 		GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation);
 
 		if (i != MAZE_SIZE - 1)
 		{
-			SpawnLocation.X = 6350;
-			SpawnLocation.Y = i * 300 + 200;
+			SpawnLocation.X = mapLength - wallWidth / 2;
+			SpawnLocation.Y = wallWidth * (i * (1 + passageWidthToWallWidthRatio) + passageWidthToWallWidthRatio / 2 + 1);
 			GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation);
 		}
 	}
@@ -172,8 +172,8 @@ void AMaze::SpawnWalls()
 			if (!(passages[x][y][NORTH] || ((y + 1 < passages.Num()) && passages[x][y + 1][SOUTH])))
 			{
 				SpawnRotation.Yaw = 90.0;
-				SpawnLocation.X = x * 300 + 200;
-				SpawnLocation.Y = (y + 1) * 300 + 50;
+				SpawnLocation.X = wallWidth * (x * (1 + passageWidthToWallWidthRatio) + passageWidthToWallWidthRatio / 2 + 1);
+				SpawnLocation.Y = (y + 1) * wallWidth * (1 + passageWidthToWallWidthRatio) + wallWidth / 2;
 				GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation);
 			}
 			if (!(passages[x][y][EAST] || ((x + 1 < passages.Num()) && passages[x + 1][y][WEST])))
@@ -181,8 +181,8 @@ void AMaze::SpawnWalls()
 				if (!((x == passages.Num() - 1) && (y == passages.Num() - 1)))
 				{
 					SpawnRotation.Yaw = 0.0;
-					SpawnLocation.X = (x + 1) * 300 + 50;
-					SpawnLocation.Y = y * 300 + 200;
+					SpawnLocation.X = (x + 1) * wallWidth * (1 + passageWidthToWallWidthRatio) + wallWidth / 2;
+					SpawnLocation.Y = wallWidth * (y * (1 + passageWidthToWallWidthRatio) + passageWidthToWallWidthRatio / 2 + 1);
 					GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation);
 				}
 			}

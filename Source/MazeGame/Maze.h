@@ -32,6 +32,11 @@ private:
 	TArray<TArray<int32>> unexplored;
 	TArray<int32> lastExploredLocation;
 
+	const int32 wallWidth = 100;
+	const int32 passageWidthToWallWidthRatio = 2;
+	const int32 mapLength = wallWidth * (MAZE_SIZE * passageWidthToWallWidthRatio + MAZE_SIZE + 1);
+	const int32 height = 400;
+
 	const int32 EAST = 1;
 	const int32 NORTH = 0;
 	const int32 SOUTH = 2;
