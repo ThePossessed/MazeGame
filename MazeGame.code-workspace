@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"name": "MazeGame",
+			"path": "."
+		},
+		{
+			"name": "UE4",
+			"path": "D:\\UE_4.25"
+		}
+	],
+	"settings": {
+		"typescript.tsc.autoDetect": "off",
+		"files.associations": {
+			"xiosbase": "cpp",
+			"ios": "cpp",
+			"random": "cpp"
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"ms-dotnettools.csharp"
+		]
+	}
+}

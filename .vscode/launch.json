@@ -1,0 +1,128 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "MazeGame (Debug)",
+			"request": "launch",
+			"preLaunchTask": "MazeGame Win64 Debug Build",
+			"program": "D:\\OneDrive\\Desktop\\GameProject\\MazeGame\\Binaries\\Win64\\UE4-Win64-Debug.exe",
+			"args": [
+			],
+			"cwd": "D:\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "MazeGame (DebugGame)",
+			"request": "launch",
+			"preLaunchTask": "MazeGame Win64 DebugGame Build",
+			"program": "D:\\OneDrive\\Desktop\\GameProject\\MazeGame\\Binaries\\Win64\\UE4-Win64-DebugGame.exe",
+			"args": [
+			],
+			"cwd": "D:\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "MazeGame (Development)",
+			"request": "launch",
+			"preLaunchTask": "MazeGame Win64 Development Build",
+			"program": "D:\\OneDrive\\Desktop\\GameProject\\MazeGame\\Binaries\\Win64\\UE4.exe",
+			"args": [
+			],
+			"cwd": "D:\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "MazeGame (Shipping)",
+			"request": "launch",
+			"preLaunchTask": "MazeGame Win64 Shipping Build",
+			"program": "D:\\OneDrive\\Desktop\\GameProject\\MazeGame\\Binaries\\Win64\\UE4-Win64-Shipping.exe",
+			"args": [
+			],
+			"cwd": "D:\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "MazeGame (Test)",
+			"request": "launch",
+			"preLaunchTask": "MazeGame Win64 Test Build",
+			"program": "D:\\OneDrive\\Desktop\\GameProject\\MazeGame\\Binaries\\Win64\\UE4-Win64-Test.exe",
+			"args": [
+			],
+			"cwd": "D:\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "MazeGameEditor (Debug)",
+			"request": "launch",
+			"preLaunchTask": "MazeGameEditor Win64 Debug Build",
+			"program": "D:\\UE_4.25\\Engine\\Binaries\\Win64\\UE4Editor-Win64-Debug.exe",
+			"args": [
+				"D:\\OneDrive\\Desktop\\GameProject\\MazeGame\\MazeGame.uproject"
+			],
+			"cwd": "D:\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "MazeGameEditor (DebugGame)",
+			"request": "launch",
+			"preLaunchTask": "MazeGameEditor Win64 DebugGame Build",
+			"program": "D:\\UE_4.25\\Engine\\Binaries\\Win64\\UE4Editor-Win64-DebugGame.exe",
+			"args": [
+				"D:\\OneDrive\\Desktop\\GameProject\\MazeGame\\MazeGame.uproject"
+			],
+			"cwd": "D:\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "MazeGameEditor (Development)",
+			"request": "launch",
+			"preLaunchTask": "MazeGameEditor Win64 Development Build",
+			"program": "D:\\UE_4.25\\Engine\\Binaries\\Win64\\UE4Editor.exe",
+			"args": [
+				"D:\\OneDrive\\Desktop\\GameProject\\MazeGame\\MazeGame.uproject"
+			],
+			"cwd": "D:\\UE_4.25",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "D:\\UE_4.25\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "Generate Project Files",
+			"type": "clr",
+			"request": "launch",
+			"program": "D:\\UE_4.25\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe",
+			"console": "externalTerminal",
+			"args": [
+				"-projectfiles",
+				"-vscode",
+				"-project=\"D:\\OneDrive\\Desktop\\GameProject\\MazeGame\\MazeGame.uproject\"",
+				"-game",
+				"-engine"
+			],
+			"internalConsoleOptions": "openOnSessionStart",
+			"cwd": "D:\\UE_4.25"
+		}
+	]
+}
