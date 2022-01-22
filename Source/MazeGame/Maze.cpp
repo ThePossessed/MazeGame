@@ -79,7 +79,7 @@ void AMaze::GenerateMaze()
 {
 	TArray<TArray<bool>> Row;
 	Row.Init({false, false, false, false}, MAZE_SIZE);
-	Passages.Init(Passage, MAZE_SIZE);
+	Passages.Init(Row, MAZE_SIZE);
 
 	Frontier = {{ 0, 0 }};
 	LastExploredLocation = {-10, -10};
