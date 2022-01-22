@@ -77,8 +77,8 @@ TArray<int32> AMaze::ExpandMaze()
 
 void AMaze::GenerateMaze()
 {
-	TArray<TArray<bool>> Passage;
-	Passage.Init({false, false, false, false}, MAZE_SIZE);
+	TArray<TArray<bool>> Row;
+	Row.Init({false, false, false, false}, MAZE_SIZE);
 	Passages.Init(Passage, MAZE_SIZE);
 
 	Frontier = {{ 0, 0 }};
