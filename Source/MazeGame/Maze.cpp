@@ -98,14 +98,12 @@ void AMaze::GenerateMaze()
 	Frontier = {{ 0, 0 }};
 	LastExploredLocation = {-10, -10};
 
-	int32 i = 0;
 	//Fill Unexplored with the whole maze, because none has been explored yet at the beginning
 	for (int x = 0; x < MAZE_SIZE; x++) 
 	{
 		for (int y = 0; y < MAZE_SIZE; y++) 
 		{
 			Unexplored.Insert({ x, y }, 0);
-			i++;
 		}
 	}
 	// 0,0 will be the entrance point, so remove it from unexplored
