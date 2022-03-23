@@ -109,7 +109,7 @@ void AMaze::GenerateMaze()
 	// 0,0 will be the entrance point, so remove it from unexplored
 	Unexplored.Remove({0, 0});
 
-	//Spawn Corners
+	//Spawn a corner in each and every (supposedly) square of the maze
 	SpawnCorners();
 
 	// While not finished expanding the maze, keep expanding (Because we will fill the whole maze until nowhere is unexplored)
@@ -117,11 +117,11 @@ void AMaze::GenerateMaze()
 	{
 		LastExploredLocation = ExpandMaze();
 	}
-	//Spawn Walls
+	//Only spawn walls that are not obstructing the paths of the expanded maze
 	SpawnWalls();
 }
 
-//I presume this is spawning Corners
+//Spawning corners 21*21
 void AMaze::SpawnCorners()
 {
 	FVector SpawnLocation;
@@ -144,7 +144,7 @@ void AMaze::SpawnCorners()
 		}
 	}
 }
-//I presume this is spawning walls
+//Spawning Walls that are not obstructing the path of the maze
 void AMaze::SpawnWalls()
 {
 	FVector SpawnLocation;
