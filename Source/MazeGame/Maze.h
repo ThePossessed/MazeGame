@@ -32,10 +32,16 @@ private:
 	TArray<TArray<int32>> Unexplored;
 	TArray<int32> LastExploredLocation;
 
-	const int32 WallWidth = 100;
-	const int32 PassageWidthToWallWidthRatio = 2;
-	const int32 MapLength = WallWidth * (MAZE_SIZE * PassageWidthToWallWidthRatio + MAZE_SIZE + 1);
-	const int32 Height = 400;
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	int32 WallWidth = 100;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	int32 PassageWidthToWallWidthRatio = 2;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	int32 Height = 400;
+	
+	int32 MapLength;
 
 	const int32 EAST = 1;
 	const int32 NORTH = 0;
@@ -52,11 +58,15 @@ private:
 	TArray<int32> ExpandLocation(TArray<int32> Here, int32 Direction);
 	TArray<int32> ExpandMaze();
 	void GenerateMaze();
+	void SpawnFloor();
 	void SpawnCorners();
 	void SpawnWalls();
 
+	// UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	// UStaticMeshComponent* Floor;
+
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* Floor;
+	TSubclassOf<AActor> FloorClass;
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AActor> WallClass;

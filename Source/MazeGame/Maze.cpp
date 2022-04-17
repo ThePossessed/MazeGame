@@ -7,8 +7,13 @@ AMaze::AMaze()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Floor = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Floor"));
-	RootComponent = Floor;
+	// Floor = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Floor"));
+	// FVector Scale = FVector(2, 2, 2);
+	// Floor->SetActorScale3D(Scale);
+
+	// RootComponent = Floor;
+
+	
 }
 
 // Called when the game starts or when spawned
@@ -65,7 +70,7 @@ TArray<int32> AMaze::ExpandMaze()
 	if (LastExploredLocation[0] == -10 && LastExploredLocation[1] == -10) Here = ChooseRandomlyFrom(Frontier);
 	else Here = LastExploredLocation;
 	
-	//Choose a Random Direction? Why not set to 0 and increment from 0 to 3 anyway lol
+	//Choose a Random Direction
 	int32 Direction = FMath::RandRange(0, 3);
 	for (int32 i = 0; i < 4; i++) 
 	{
@@ -88,6 +93,8 @@ TArray<int32> AMaze::ExpandMaze()
 
 void AMaze::GenerateMaze()
 {
+	MapLength = WallWidth * (MAZE_SIZE * PassageWidthToWallWidthRatio + MAZE_SIZE + 1);
+
 	TArray<TArray<bool>> Row;
 	//Fill the 2D Array Row with arrays of booleans (This is indication whether the direction has wall or not. N = 0, E = 1, S = 2, W = 3, these are the index of
 	//the boolean array) (basically, each array of boolean represent one square inside the maze, number of squares * one square = 1 row)
@@ -109,6 +116,9 @@ void AMaze::GenerateMaze()
 	// 0,0 will be the entrance point, so remove it from unexplored
 	Unexplored.Remove({0, 0});
 
+
+	SpawnFloor();
+
 	//Spawn a corner in each and every (supposedly) square of the maze
 	SpawnCorners();
 
@@ -121,9 +131,39 @@ void AMaze::GenerateMaze()
 	SpawnWalls();
 }
 
+
+void AMaze::SpawnFloor()
+{
+	FVector SpawnScale;
+	SpawnScale.X = MapLength / 200.0;
+	SpawnScale.Y = MapLength / 200.0;
+	SpawnScale.Z = 1.0;
+
+	FVector SpawnLocation;
+	SpawnLocation.X = MapLength / 2.0;
+	SpawnLocation.Y = MapLength / 2.0;
+	SpawnLocation.Z = -20.0;
+
+	FQuat SpawnRotation;
+	SpawnRotation.X = 0.0;
+	SpawnRotation.Y = 0.0;
+	SpawnRotation.Z = 0.0;
+	SpawnRotation.W = 0.0;
+
+	FTransform SpawnTransform = FTransform(SpawnRotation, SpawnLocation, SpawnScale);
+
+	GetWorld()->SpawnActor<AActor>(FloorClass, SpawnLocation, SpawnRotation.Rotator())->SetActorTransform(SpawnTransform);
+}
+
+
 //Spawning corners 21*21
 void AMaze::SpawnCorners()
 {
+	FVector SpawnScale;
+	SpawnScale.X = WallWidth / 200.0;
+	SpawnScale.Y = WallWidth / 200.0;;
+	SpawnScale.Z = Height / 800.0;
+
 	FVector SpawnLocation;
 	SpawnLocation.X = 0.0;
 	SpawnLocation.Y = 0.0;
@@ -140,13 +180,19 @@ void AMaze::SpawnCorners()
 		{
 			SpawnLocation.X = i * WallWidth * (1 + PassageWidthToWallWidthRatio) + WallWidth / 2;
 			SpawnLocation.Y = j * WallWidth * (1 + PassageWidthToWallWidthRatio) + WallWidth / 2;
-			GetWorld()->SpawnActor<AActor>(CornerClass, SpawnLocation, SpawnRotation);
+			GetWorld()->SpawnActor<AActor>(CornerClass, SpawnLocation, SpawnRotation)->SetActorTransform(FTransform(SpawnRotation.Quaternion(), SpawnLocation, SpawnScale));
 		}
 	}
 }
+
 //Spawning Walls that are not obstructing the path of the maze
 void AMaze::SpawnWalls()
 {
+	FVector SpawnScale;
+	SpawnScale.X = WallWidth / 200.0;
+	SpawnScale.Y = WallWidth * PassageWidthToWallWidthRatio / 400.0;;
+	SpawnScale.Z = Height / 800.0;
+
 	FVector SpawnLocation;
 	SpawnLocation.X = 0.0;
 	SpawnLocation.Y = 0.0;
@@ -163,23 +209,23 @@ void AMaze::SpawnWalls()
 		{
 			SpawnLocation.X = WallWidth * (i * (1 + PassageWidthToWallWidthRatio) + PassageWidthToWallWidthRatio / 2 + 1);
 			SpawnLocation.Y = WallWidth / 2;
-			GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation);
+			GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation)->SetActorTransform(FTransform(SpawnRotation.Quaternion(), SpawnLocation, SpawnScale));
 		}
 
 		SpawnLocation.X = WallWidth * (i * (1 + PassageWidthToWallWidthRatio) + PassageWidthToWallWidthRatio / 2 + 1);
 		SpawnLocation.Y = MapLength - WallWidth / 2;
-		GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation);
+		GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation)->SetActorTransform(FTransform(SpawnRotation.Quaternion(), SpawnLocation, SpawnScale));
 
 		SpawnRotation.Yaw = 0.0;
 		SpawnLocation.X = WallWidth / 2;
 		SpawnLocation.Y = WallWidth * (i * (1 + PassageWidthToWallWidthRatio) + PassageWidthToWallWidthRatio / 2 + 1);
-		GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation);
+		GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation)->SetActorTransform(FTransform(SpawnRotation.Quaternion(), SpawnLocation, SpawnScale));
 
 		if (i != MAZE_SIZE - 1)
 		{
 			SpawnLocation.X = MapLength - WallWidth / 2;
 			SpawnLocation.Y = WallWidth * (i * (1 + PassageWidthToWallWidthRatio) + PassageWidthToWallWidthRatio / 2 + 1);
-			GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation);
+			GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation)->SetActorTransform(FTransform(SpawnRotation.Quaternion(), SpawnLocation, SpawnScale));
 		}
 	}
 	for (int x = 0; x < Passages.Num(); x++)
@@ -191,7 +237,7 @@ void AMaze::SpawnWalls()
 				SpawnRotation.Yaw = 90.0;
 				SpawnLocation.X = WallWidth * (x * (1 + PassageWidthToWallWidthRatio) + PassageWidthToWallWidthRatio / 2 + 1);
 				SpawnLocation.Y = (y + 1) * WallWidth * (1 + PassageWidthToWallWidthRatio) + WallWidth / 2;
-				GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation);
+				GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation)->SetActorTransform(FTransform(SpawnRotation.Quaternion(), SpawnLocation, SpawnScale));
 			}
 			if (!(Passages[x][y][EAST] || ((x + 1 < Passages.Num()) && Passages[x + 1][y][WEST])))
 			{
@@ -200,7 +246,7 @@ void AMaze::SpawnWalls()
 					SpawnRotation.Yaw = 0.0;
 					SpawnLocation.X = (x + 1) * WallWidth * (1 + PassageWidthToWallWidthRatio) + WallWidth / 2;
 					SpawnLocation.Y = WallWidth * (y * (1 + PassageWidthToWallWidthRatio) + PassageWidthToWallWidthRatio / 2 + 1);
-					GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation);
+					GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation)->SetActorTransform(FTransform(SpawnRotation.Quaternion(), SpawnLocation, SpawnScale));
 				}
 			}
 		}
