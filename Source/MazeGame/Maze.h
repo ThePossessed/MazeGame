@@ -24,7 +24,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	const int32 MAZE_SIZE = 21;
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	int32 MAZE_SIZE = 21;
 
 	TArray<TArray<TArray<bool>>> Passages;
 	TArray<TArray<int32>> Done;
@@ -36,7 +37,7 @@ private:
 	int32 WallWidth = 100;
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	int32 PassageWidthToWallWidthRatio = 2;
+	double PassageWidthToWallWidthRatio = 2.0;
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	int32 Height = 400;
