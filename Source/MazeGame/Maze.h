@@ -24,23 +24,11 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	int32 MAZE_SIZE = 21;
-
 	TArray<TArray<TArray<bool>>> Passages;
 	TArray<TArray<int32>> Done;
 	TArray<TArray<int32>> Frontier;
 	TArray<TArray<int32>> Unexplored;
 	TArray<int32> LastExploredLocation;
-
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	int32 WallWidth = 100;
-
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	double PassageWidthToWallWidthRatio = 2.0;
-
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	int32 Height = 400;
 	
 	int32 MapLength;
 
@@ -63,9 +51,6 @@ private:
 	void SpawnCorners();
 	void SpawnWalls();
 
-	// UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	// UStaticMeshComponent* Floor;
-
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AActor> FloorClass;
 
@@ -75,4 +60,15 @@ private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AActor> CornerClass;
 
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	int32 MazeSize = 21;
+	
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	int32 WallWidth = 100;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	double PassageWidthToWallWidthRatio = 2.0;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	int32 Height = 400;
 };

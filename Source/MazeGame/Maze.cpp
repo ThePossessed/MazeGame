@@ -1,19 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "Maze.h"
 #include "Math/UnrealMathUtility.h"
+
 // Sets default values
 AMaze::AMaze()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	// Floor = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Floor"));
-	// FVector Scale = FVector(2, 2, 2);
-	// Floor->SetActorScale3D(Scale);
-
-	// RootComponent = Floor;
-
-	
 }
 
 // Called when the game starts or when spawned
@@ -51,9 +44,11 @@ TArray<int32> AMaze::ExpandLocation(TArray<int32> Here, int32 Direction)
 {
 	//Set the Delta Expand = 0
 	TArray<int32> There = {0, 0};
+
 	//Expand the maze in that direction
 	There[X] = Here[X] + OFFSETS[Direction][X];
 	There[Y] = Here[Y] + OFFSETS[Direction][Y];
+
 	//If not already passage, add a passage
 	if (Unexplored.Find(There) != INDEX_NONE) 
 	{
@@ -75,6 +70,7 @@ TArray<int32> AMaze::ExpandMaze()
 	for (int32 i = 0; i < 4; i++) 
 	{
 		TArray<int32> There = ExpandLocation(Here, Direction); 
+
 		//If expandable, then Expand to that direction 1 space
 		if (!(There[0] == -10 && There[1] == -10))
 		{
@@ -82,9 +78,11 @@ TArray<int32> AMaze::ExpandMaze()
 			Unexplored.Remove(There);
 			return There;
 		}
+
 		//Else, continue to see another direction (in short, this will check for all 4 directions)
 		Direction = (Direction + 1) % 4;
 	}
+
 	//If not expandable in all direction then return
 	Done.Insert(Here, 0);
 	Frontier.Remove(Here);
@@ -93,26 +91,29 @@ TArray<int32> AMaze::ExpandMaze()
 
 void AMaze::GenerateMaze()
 {
-	MapLength = WallWidth * (MAZE_SIZE * PassageWidthToWallWidthRatio + MAZE_SIZE + 1);
+	MapLength = WallWidth * (MazeSize * PassageWidthToWallWidthRatio + MazeSize + 1);
 
 	TArray<TArray<bool>> Row;
+
 	//Fill the 2D Array Row with arrays of booleans (This is indication whether the direction has wall or not. N = 0, E = 1, S = 2, W = 3, these are the index of
 	//the boolean array) (basically, each array of boolean represent one square inside the maze, number of squares * one square = 1 row)
-	Row.Init({false, false, false, false}, MAZE_SIZE);
+	Row.Init({false, false, false, false}, MazeSize);
+
 	//Many rows = whole passage
-	Passages.Init(Row, MAZE_SIZE);
+	Passages.Init(Row, MazeSize);
 
 	Frontier = {{ 0, 0 }};
 	LastExploredLocation = {-10, -10};
 
 	//Fill Unexplored with the whole maze, because none has been explored yet at the beginning
-	for (int x = 0; x < MAZE_SIZE; x++) 
+	for (int x = 0; x < MazeSize; x++) 
 	{
-		for (int y = 0; y < MAZE_SIZE; y++) 
+		for (int y = 0; y < MazeSize; y++) 
 		{
 			Unexplored.Insert({ x, y }, 0);
 		}
 	}
+
 	// 0,0 will be the entrance point, so remove it from unexplored
 	Unexplored.Remove({0, 0});
 
@@ -127,6 +128,7 @@ void AMaze::GenerateMaze()
 	{
 		LastExploredLocation = ExpandMaze();
 	}
+
 	//Only spawn walls that are not obstructing the paths of the expanded maze
 	SpawnWalls();
 }
@@ -144,15 +146,12 @@ void AMaze::SpawnFloor()
 	SpawnLocation.Y = MapLength / 2.0;
 	SpawnLocation.Z = -20.0;
 
-	FQuat SpawnRotation;
-	SpawnRotation.X = 0.0;
-	SpawnRotation.Y = 0.0;
-	SpawnRotation.Z = 0.0;
-	SpawnRotation.W = 0.0;
+	FRotator SpawnRotation;
+	SpawnRotation.Roll = 0.0;
+	SpawnRotation.Pitch = 0.0;
+	SpawnRotation.Yaw = 0.0;
 
-	FTransform SpawnTransform = FTransform(SpawnRotation, SpawnLocation, SpawnScale);
-
-	GetWorld()->SpawnActor<AActor>(FloorClass, SpawnLocation, SpawnRotation.Rotator())->SetActorTransform(SpawnTransform);
+	GetWorld()->SpawnActor<AActor>(FloorClass, SpawnLocation, SpawnRotation)->SetActorTransform(FTransform(SpawnRotation.Quaternion(), SpawnLocation, SpawnScale));
 }
 
 
@@ -174,9 +173,9 @@ void AMaze::SpawnCorners()
 	SpawnRotation.Pitch = 0.0;
 	SpawnRotation.Yaw = 0.0;
 
-	for (int i = 0; i < MAZE_SIZE + 1; i++)
+	for (int i = 0; i < MazeSize + 1; i++)
 	{
-		for (int j = 0; j < MAZE_SIZE + 1; j++)
+		for (int j = 0; j < MazeSize + 1; j++)
 		{
 			SpawnLocation.X = i * WallWidth * (1 + PassageWidthToWallWidthRatio) + WallWidth / 2;
 			SpawnLocation.Y = j * WallWidth * (1 + PassageWidthToWallWidthRatio) + WallWidth / 2;
@@ -202,7 +201,7 @@ void AMaze::SpawnWalls()
 	SpawnRotation.Roll = 0.0;
 	SpawnRotation.Pitch = 0.0;
 
-	for (int i = 0; i < MAZE_SIZE; i++)
+	for (int i = 0; i < MazeSize; i++)
 	{
 		SpawnRotation.Yaw = 90.0;
 		if (i != 0)
@@ -221,13 +220,14 @@ void AMaze::SpawnWalls()
 		SpawnLocation.Y = WallWidth * (i * (1 + PassageWidthToWallWidthRatio) + PassageWidthToWallWidthRatio / 2 + 1);
 		GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation)->SetActorTransform(FTransform(SpawnRotation.Quaternion(), SpawnLocation, SpawnScale));
 
-		if (i != MAZE_SIZE - 1)
+		if (i != MazeSize - 1)
 		{
 			SpawnLocation.X = MapLength - WallWidth / 2;
 			SpawnLocation.Y = WallWidth * (i * (1 + PassageWidthToWallWidthRatio) + PassageWidthToWallWidthRatio / 2 + 1);
 			GetWorld()->SpawnActor<AActor>(WallClass, SpawnLocation, SpawnRotation)->SetActorTransform(FTransform(SpawnRotation.Quaternion(), SpawnLocation, SpawnScale));
 		}
 	}
+
 	for (int x = 0; x < Passages.Num(); x++)
 	{
 		for (int y = 0; y < Passages.Num(); y++)
