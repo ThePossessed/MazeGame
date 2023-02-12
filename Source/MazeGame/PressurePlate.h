@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
 #include "PressurePlate.generated.h"
 
@@ -31,4 +32,6 @@ public:
 private:
 	UPROPERTY(EditAnywhere)
 	AActor* ActorThatWins;
+
+	FName WinPage = FName(TEXT("WinPage"));
 };

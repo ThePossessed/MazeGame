@@ -41,5 +41,5 @@ void UPressurePlate::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 void UPressurePlate::ChangeScene()
 {
 	// ...
-	UE_LOG(LogTemp, Error, TEXT("aaaaaaaaaaaaaaaaaa"));
+	UGameplayStatics::OpenLevel(this, WinPage);
 }
