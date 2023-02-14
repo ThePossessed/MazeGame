@@ -20,11 +20,12 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	class UCapsuleComponent* CapComp;
-	UPROPERTY()
+
+	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* BaseMesh;
-	
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

@@ -2,6 +2,7 @@
 
 
 #include "BasePawn.h"
+#include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 
 // Sets default values
@@ -11,8 +12,8 @@ ABasePawn::ABasePawn()
 	PrimaryActorTick.bCanEverTick = true;
 	CapComp = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
 	RootComponent = CapComp;
-	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	BaseMesh->SetUpAttachment(CapComp);
+	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh"));
+	BaseMesh->SetupAttachment(CapComp);
 }
 
 // Called when the game starts or when spawned
