@@ -1,32 +1,32 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PlayerCharacter.h"
+#include "BasePawn.h"
 
 // Sets default values
-APlayerCharacter::APlayerCharacter()
+ABasePawn::ABasePawn()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	RootComponent
 }
 
 // Called when the game starts or when spawned
-void APlayerCharacter::BeginPlay()
+void ABasePawn::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void APlayerCharacter::Tick(float DeltaTime)
+void ABasePawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
 // Called to bind functionality to input
-void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 

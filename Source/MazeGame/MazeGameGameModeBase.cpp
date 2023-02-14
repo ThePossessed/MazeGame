@@ -2,13 +2,3 @@
 
 
 #include "MazeGameGameModeBase.h"
-
-AMazeGameGameModeBase::AMazeGameGameModeBase()
-{
-    PrimaryActorTick.bCanEverTick = false;
-    PrimaryActorTick.bStartWithTickEnabled = false;
-    PrimaryActorTick.bAllowTickOnDedicatedServer = false;
-
-    DefaultPawnClass = APlayerCharacter::StaticClass();
-
-}
