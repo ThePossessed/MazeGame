@@ -36,11 +36,17 @@ void ABasePawn::Tick(float DeltaTime)
 void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAxis(TEXT("Move Forward"), this, &ABasePawn::Move);
+	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ABasePawn::Move);
+	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ABasePawn::Move);
 }
-
 void ABasePawn::Move(float Value){
 	FVector DeltaLocation = FVector::ZeroVector;
 	DeltaLocation.X = Value * Speed * UGameplayStatics::GetWorldDeltaSeconds(this);
-	AddActorLocalOffset(DeltaLocation);
+	AddActorLocalOffset(DeltaLocation, true);
+}
+
+void ABasePawn::Turn(float Value){
+	FRotator DeltaRotation = FRotator::ZeroRotator;
+	DeltaRotation.Yaw = Value * TurnRate * UGameplayStatics::GetWorldDeltaSeconds(this);
+	AddActorLocalRotation(DeltaLocation, true);
 }
