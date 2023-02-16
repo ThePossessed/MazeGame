@@ -20,12 +20,14 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Components")
 	class UCapsuleComponent* CapComp;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Components")
 	UStaticMeshComponent* BaseMesh;
 
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float Speed = 200.f;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
