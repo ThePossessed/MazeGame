@@ -4,6 +4,7 @@
 #include "BasePawn.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/InputComponent.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -34,6 +35,11 @@ void ABasePawn::Tick(float DeltaTime)
 void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	PlayerInputComponent->BindAxis(TEXT("Move Forward"), this, &ABasePawn::Move);
 }
 
+void ABasePawn::Move(float Value){
+	FVector DeltaLocation = FVector::ZeroVector;
+	DeltaLocation.X = Value;
+	AddActorLocalOffset(DeltaLocation);
+}
