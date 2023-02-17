@@ -3,31 +3,25 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
-#include "BasePawn.generated.h"
+#include "GameFramework/Character.h"
+#include "MyCharacter.generated.h"
 
 UCLASS()
-class MAZEGAME_API ABasePawn : public APawn
+class MAZEGAME_API AMyCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
-	ABasePawn();
+	// Sets default values for this character's properties
+	AMyCharacter();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Components")
-	class UCapsuleComponent* CapComp;
-
-	UPROPERTY(EditAnywhere, Category = "Components")
-	UStaticMeshComponent* BaseMesh;
-
 	UPROPERTY(EditAnywhere, Category = "Movement")
-	float Speed = 500.f;
+	float Speed = 1.f;
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float TurnRate = 200.f;

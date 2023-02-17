@@ -6,7 +6,6 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "Kismet/GameplayStatics.h"
-
 // Sets default values
 ABasePawn::ABasePawn()
 {
@@ -23,7 +22,6 @@ void ABasePawn::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	PlayerControllerRef = Cast<APlayerController>(GetController());
 }
 
 // Called every frame
@@ -37,17 +35,15 @@ void ABasePawn::Tick(float DeltaTime)
 void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ABasePawn::MoveFW);
-	PlayerInputComponent->BindAxis(TEXT("MoveLR"), this, &ABasePawn::MoveLR);
+	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ABasePawn::MoveForward);
+	PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &ABasePawn::MoveRight);
+	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ABasePawn::AddControllerPitchInput);
+	PlayerInputComponent->BindAxis(TEXT("LookRight"), this, &ABasePawn::AddControllerYawInput);
 }
-void ABasePawn::MoveFW(float Value){
-	FVector DeltaLocation = FVector::ZeroVector;
-	DeltaLocation.X = Value * Speed * UGameplayStatics::GetWorldDeltaSeconds(this);
-	AddActorLocalOffset(DeltaLocation, true);
+void ABasePawn::MoveForward(float Value){
+	AddMovementInput(GetActorForwardVector(), Value);
 }
 
-void ABasePawn::MoveLR(float Value){
-	FVector DeltaLocation = FVector::ZeroVector;
-	DeltaLocation.Y = Value * Speed * UGameplayStatics::GetWorldDeltaSeconds(this);
-	AddActorLocalOffset(DeltaLocation, true);
+void ABasePawn::MoveRight(float Value){
+	AddMovementInput(GetActorRightVector(), Value);
 }
