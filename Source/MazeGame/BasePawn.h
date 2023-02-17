@@ -27,7 +27,7 @@ private:
 	UStaticMeshComponent* BaseMesh;
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
-	float Speed = 200.f;
+	float Speed = 500.f;
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float TurnRate = 200.f;

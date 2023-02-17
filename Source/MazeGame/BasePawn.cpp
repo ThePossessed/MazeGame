@@ -37,7 +37,7 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ABasePawn::Move);
-	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ABasePawn::Move);
+	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ABasePawn::Turn);
 }
 void ABasePawn::Move(float Value){
 	FVector DeltaLocation = FVector::ZeroVector;
@@ -48,5 +48,5 @@ void ABasePawn::Move(float Value){
 void ABasePawn::Turn(float Value){
 	FRotator DeltaRotation = FRotator::ZeroRotator;
 	DeltaRotation.Yaw = Value * TurnRate * UGameplayStatics::GetWorldDeltaSeconds(this);
-	AddActorLocalRotation(DeltaLocation, true);
+	AddActorLocalRotation(DeltaRotation, true);
 }
