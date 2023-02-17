@@ -23,6 +23,7 @@ void ABasePawn::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	PlayerControllerRef = Cast<APlayerController>(GetController());
 }
 
 // Called every frame
@@ -36,17 +37,17 @@ void ABasePawn::Tick(float DeltaTime)
 void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ABasePawn::Move);
-	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ABasePawn::Turn);
+	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ABasePawn::MoveFW);
+	PlayerInputComponent->BindAxis(TEXT("MoveLR"), this, &ABasePawn::MoveLR);
 }
-void ABasePawn::Move(float Value){
+void ABasePawn::MoveFW(float Value){
 	FVector DeltaLocation = FVector::ZeroVector;
 	DeltaLocation.X = Value * Speed * UGameplayStatics::GetWorldDeltaSeconds(this);
 	AddActorLocalOffset(DeltaLocation, true);
 }
 
-void ABasePawn::Turn(float Value){
-	FRotator DeltaRotation = FRotator::ZeroRotator;
-	DeltaRotation.Yaw = Value * TurnRate * UGameplayStatics::GetWorldDeltaSeconds(this);
-	AddActorLocalRotation(DeltaRotation, true);
+void ABasePawn::MoveLR(float Value){
+	FVector DeltaLocation = FVector::ZeroVector;
+	DeltaLocation.Y = Value * Speed * UGameplayStatics::GetWorldDeltaSeconds(this);
+	AddActorLocalOffset(DeltaLocation, true);
 }

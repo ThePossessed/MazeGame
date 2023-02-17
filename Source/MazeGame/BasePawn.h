@@ -31,6 +31,8 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float TurnRate = 200.f;
+
+	APlayerController* PlayerControllerRef;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -38,7 +40,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void Move(float Value);
+	void MoveFW(float Value);
 
-	void Turn(float Value);
+	void MoveLR(float Value);
 };
