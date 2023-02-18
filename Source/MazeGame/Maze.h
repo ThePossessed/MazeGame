@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Engine/TriggerVolume.h"
+#include "Kismet/GameplayStatics.h"
 #include "Maze.generated.h"
 
 UCLASS()
@@ -22,8 +24,13 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	virtual void ChangeScene();
 
 private:
+	AActor* Character;
+	AActor* TriggerBox;
+	FName WinPage = FName(TEXT("WinPage"));
+	
 	TArray<TArray<TArray<bool>>> Passages;
 	TArray<TArray<int32>> Done;
 	TArray<TArray<int32>> Frontier;
@@ -50,6 +57,7 @@ private:
 	void SpawnFloor();
 	void SpawnCorners();
 	void SpawnWalls();
+	void SpawnTriggerBox();
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AActor> FloorClass;
@@ -59,6 +67,9 @@ private:
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AActor> CornerClass;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AActor> TriggerBoxClass;
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	int32 MazeSize = 21;

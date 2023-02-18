@@ -13,6 +13,7 @@ AMaze::AMaze()
 void AMaze::BeginPlay()
 {
 	Super::BeginPlay();
+	Character = GetWorld()->GetFirstPlayerController()->GetPawn();
 	GenerateMaze();
 }
 
@@ -20,6 +21,18 @@ void AMaze::BeginPlay()
 void AMaze::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	// if (!Character) {
+	// 	Character = GetWorld()->GetFirstPlayerController()->GetPawn();
+	// }
+	if (TriggerBox && Character && TriggerBox->IsOverlappingActor(Character)) {
+		ChangeScene();
+	}
+}
+
+void AMaze::ChangeScene()
+{
+	UGameplayStatics::OpenLevel(this, WinPage);
 }
 
 //Add a passage from position A to position B
@@ -117,7 +130,6 @@ void AMaze::GenerateMaze()
 	// 0,0 will be the entrance point, so remove it from unexplored
 	Unexplored.Remove({0, 0});
 
-
 	SpawnFloor();
 
 	//Spawn a corner in each and every (supposedly) square of the maze
@@ -131,6 +143,30 @@ void AMaze::GenerateMaze()
 
 	//Only spawn walls that are not obstructing the paths of the expanded maze
 	SpawnWalls();
+
+	//Spawn a trigger box at the exit
+	SpawnTriggerBox();
+}
+
+void AMaze::SpawnTriggerBox()
+{
+	FVector SpawnScale;
+	SpawnScale.X = WallWidth * PassageWidthToWallWidthRatio / 100.0;
+	SpawnScale.Y = WallWidth * PassageWidthToWallWidthRatio / 100.0;
+	SpawnScale.Z = 1.0;
+
+	FVector SpawnLocation;
+	SpawnLocation.X = MapLength - WallWidth * PassageWidthToWallWidthRatio / 2.0 - WallWidth;
+	SpawnLocation.Y = MapLength - WallWidth * PassageWidthToWallWidthRatio / 2.0 - WallWidth;
+	SpawnLocation.Z = 0.0;
+
+	FRotator SpawnRotation;
+	SpawnRotation.Roll = 0.0;
+	SpawnRotation.Pitch = 0.0;
+	SpawnRotation.Yaw = 0.0;
+
+	TriggerBox = (AActor*) GetWorld()->SpawnActor<AActor>(TriggerBoxClass, SpawnLocation, SpawnRotation);
+	TriggerBox->SetActorTransform(FTransform(SpawnRotation.Quaternion(), SpawnLocation, SpawnScale));
 }
 
 
