@@ -6,6 +6,11 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Camera/PlayerCameraManager.h"
+#include "Camera/CameraComponent.h"
+#include "GameFramework/Controller.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
 // Sets default values
 AMyCharacter::AMyCharacter()
 {
@@ -17,6 +22,7 @@ AMyCharacter::AMyCharacter()
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	CamManager = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
 	
 }
 
@@ -38,11 +44,18 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &AMyCharacter::Jump);
 }
 
-void AMyCharacter::MoveForward(float Value){
-	AddMovementInput(GetActorForwardVector() * Value * Speed);
+void AMyCharacter::MoveForward(float Value) {
+	FRotator Rotation = Controller->GetControlRotation();
+	FRotator YawRotation(0.0f, Rotation.Yaw, 0.0f);
+
+	FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	AddMovementInput(Direction, Value);
 }
 
 void AMyCharacter::MoveRight(float Value){
-	AddMovementInput(GetActorRightVector() * Value * Speed);
-}
+	FRotator Rotation = Controller->GetControlRotation();
+	FRotator YawRotation(0.0f, Rotation.Yaw, 0.0f);
 
+	FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	AddMovementInput(Direction, Value);
+}

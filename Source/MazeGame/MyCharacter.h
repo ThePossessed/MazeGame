@@ -26,6 +26,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float TurnRate = 200.f;
 
+	class APlayerCameraManager* CamManager;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
