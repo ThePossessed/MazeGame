@@ -6,6 +6,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Camera/PlayerCameraManager.h"
 // Sets default values
 AMyCharacter::AMyCharacter()
 {
@@ -17,6 +18,7 @@ AMyCharacter::AMyCharacter()
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	CamManager = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
 	
 }
 
@@ -39,10 +41,14 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 }
 
 void AMyCharacter::MoveForward(float Value){
-	AddMovementInput(GetActorForwardVector() * Value * Speed);
+	FVector CFVector = CamManager->GetCameraRotation().Vector(); 
+	AddMovementInput(CFVector * Value * Speed);
 }
 
 void AMyCharacter::MoveRight(float Value){
-	AddMovementInput(GetActorRightVector() * Value * Speed);
+	FRotator CFRotator = CamManager->GetCameraRotation();
+	CFRotator.Yaw += 90;
+	FVector CFVector = CFRotator.Vector();
+	AddMovementInput(CFVector * Value * Speed);
+	GetController()->SetControlRotation(CFRotator);
 }
-
