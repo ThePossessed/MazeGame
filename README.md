@@ -8,4 +8,4 @@ Procedurally generated 3D maze in Unreal Engine.
 ### Contributors:
 - bucket420 (Chris Hoang)
 - nghi01 (Nghi Nguyen)
-
+- Eriksen2411 (Danh Nguyen)
