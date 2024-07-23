@@ -14,6 +14,7 @@ void AMaze::BeginPlay()
 {
 	Super::BeginPlay();
 	Character = GetWorld()->GetFirstPlayerController()->GetPawn();
+	MazeSize = Cast<UMazeGameInstance>(GetGameInstance())->GetMazeSize();
 	GenerateMaze();
 }
 

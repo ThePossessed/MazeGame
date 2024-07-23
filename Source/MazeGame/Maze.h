@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Engine/TriggerVolume.h"
 #include "Kismet/GameplayStatics.h"
+#include "MazeGameInstance.h"
 #include "Maze.generated.h"
 
 UCLASS()
@@ -72,7 +73,7 @@ private:
 	TSubclassOf<AActor> TriggerBoxClass;
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	int32 MazeSize = 21;
+	int32 MazeSize = 15;
 	
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	int32 WallWidth = 100;
