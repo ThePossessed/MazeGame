@@ -39,4 +39,6 @@ public:
 
 	void MoveRight(float Value);
 
+	void Quit();
+
 };
