@@ -6,7 +6,7 @@
 // Sets default values
 UMazeGameInstance::UMazeGameInstance()
 {
-    MazeSize = 12;
+    MazeSize = 15;
 }
 
 void UMazeGameInstance::SetMazeSize(int32 size)
